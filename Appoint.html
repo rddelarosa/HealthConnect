@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthConnect</title>
+  <link rel="stylesheet" type="text/css" href="style_durungawan.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet"
+  href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+
+
+<style>
+  header{
+        background: #03426a ;
+        height: 80px;
+      }
+
+    </style>
+
+<!-- Navagation Bar codes -->
+<header class="header">
+  <div class="bx bx-menu" id="menu-icon">
+    </div>
+    <a href="index_HC.html" class="logo"> <img src="HC_img\HC (4).png" alt="Logo" class="logo-img" /> <span class="logo-text"> HealthConnect</span> </a>
+
+  <ul class="navbar">
+    <li>
+      <a class="active" href="index_HC.html">Home</a>
+    </li>
+    <li>
+      <a class="active" href="Appoint.html">Appointment</a>
+    </li>
+    <li>
+      <a class="active" href="Health_FAQ.html">Resources</a>
+    </li>
+    <li>
+      <a class="active" href="AboutUs.html">About Us</a>
+    </li>
+  </ul>
+  <div class="navbar">
+    <a href="Appoint.html"><i class="ri-bookmark-fill"></i>Book Now</a>
+    <a href="Signin.html">Sign In</a>
+  </div>
+</header>
+  
+
+
+
+
+
+<!-- BOOK NOW -->
+
+<!-- Form Section with Sign-In -->
+<section class="auth-section" id="book-now">
+
+  <h1 class="heading">Sign In to Book an Appointment</h1>
+
+  <div class="form-container">
+
+    <!-- Form Wrapper with Sign-In and Step Sections -->
+    <form id="appointmentForm">
+      <!-- Step 0: Sign-In -->
+      <div class="form-step active-step">
+        <h2>Sign In</h2>
+
+        <label for="signinEmail">Email Address: <span class="required">*</span></label>
+        <input type="email" id="signinEmail" placeholder="Your Email" required>
+        <span class="error-message"></span>
+
+        <label for="signinPassword">Password: <span class="required">*</span></label>
+        <input type="password" id="signinPassword" placeholder="Your Password" required>
+        <span class="error-message"></span>
+      </div>
+
+      <!-- Step 1: General Information -->
+      <div class="form-step">
+        <h2>General Information</h2>
+
+        <label for="firstName">Full Name: <span class="required">*</span></label>
+        <input type="text" id="firstName" placeholder="First Name" required>
+        <input type="text" id="lastName" placeholder="Last Name" required>
+        <span class="error-message"></span>
+
+        <label for="dob">Date of Birth: <span class="required">*</span></label>
+        <input type="date" id="dob" required>
+        <span class="error-message"></span>
+
+        <label for="email">Email Address: <span class="required">*</span></label>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <span class="error-message"></span>
+
+        <label for="phone">Phone Number: <span class="required">*</span></label>
+        <input type="tel" id="phone" placeholder="Your Phone Number" required>
+        <span class="error-message"></span>
+
+        <label for="communication">Preferred Method of Communication: <span class="required">*</span></label>
+        <select id="communication" required>
+          <option value="">Select</option>
+          <option value="Email">Email</option>
+          <option value="Phone">Phone</option>
+          <option value="SMS">SMS</option>
+        </select>
+        <span class="error-message"></span>
+      </div>
+
+      <!-- Step 2: Consultation Details -->
+      <div class="form-step">
+        <h2>Consultation Details</h2>
+
+        <label>Type of Consultation: <span class="required">*</span></label>
+        <input type="radio" name="consultType" value="Online" required> Online
+        <input type="radio" name="consultType" value="Face-to-Face"> Face-to-Face
+        <span class="error-message"></span>
+
+        <label for="date">Preferred Date and Time: <span class="required">*</span></label>
+        <input type="date" id="date" required>
+        <select id="time" required>
+          <option value="">Select Time</option>
+          <option value="10 AM">10 AM - 12 NN</option>
+          <option value="12 NN">12 NN - 2 PM</option>
+          <option value="6 PM">6 PM - 8 PM</option>
+        </select>
+        <span class="error-message"></span>
+
+        <label for="duration">Duration of Consultation: <span class="required">*</span></label>
+        <select id="duration" required>
+          <option value="">Select Duration</option>
+          <option value="15 mins">15 minutes</option>
+          <option value="30 mins">30 minutes</option>
+          <option value="1 hour">1 hour</option>
+        </select>
+        <span class="error-message"></span>
+      </div>
+
+      <!-- Form Navigation Buttons -->
+      <div class="form-actions">
+        <button type="button" id="prevBtn" onclick="changeStep(-1)">Back</button>
+        <button type="button" id="nextBtn" onclick="changeStep(1)">Next</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- CSS for Required Asterisks, Form Steps, and Button Styles -->
+<style>
+.auth-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f4f8fc;
+}
+
+.form-container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 95%;
+  border: 1px solid #007BFF;
+}
+
+.heading {
+  text-align: center;
+  color: #007BFF;
+}
+
+.required {
+  color: red;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8em;
+  display: none; /* Initially hidden */
+}
+
+.form-step {
+  display: none; /* Hide all steps initially */
+}
+
+.active-step {
+  display: block; /* Show the active step */
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#prevBtn, #nextBtn {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#prevBtn {
+  background-color: #6c757d;
+}
+</style>
+
+
+<script>
+
+  let currentStep = 0; // Track current step
+  showStep(currentStep); // Display the initial step
+  
+  function showStep(step) {
+    const steps = document.querySelectorAll('.form-step');
+    steps.forEach((s, i) => (s.style.display = i === step ? 'block' : 'none'));
+  
+    document.getElementById('prevBtn').style.display = step === 0 ? 'none' : 'inline';
+    document.getElementById('nextBtn').innerText = step === steps.length - 1 ? 'Submit' : 'Next';
+  }
+  
+  function changeStep(stepChange) {
+    const steps = document.querySelectorAll('.form-step');
+    if (stepChange === 1 && !validateStep()) return; // Check validation before moving forward
+    currentStep += stepChange;
+  
+    if (currentStep >= steps.length) {
+      document.getElementById("appointmentForm").submit();
+      return;
+    }
+    showStep(currentStep);
+  }
+  
+  function validateStep() {
+    const inputs = document.querySelectorAll(`.form-step:nth-child(${currentStep + 1}) input, .form-step:nth-child(${currentStep + 1}) select`);
+    let valid = true;
+  
+    inputs.forEach(input => {
+      if (!input.checkValidity()) {
+        input.classList.add('error');
+        input.nextElementSibling.style.display = 'inline';
+        valid = false;
+      } else {
+        input.classList.remove('error');
+        input.nextElementSibling.style.display = 'none';
+      }
+    });
+  
+    return valid;
+  }
+  
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- thank you message -->
+
+ <div class="submitted" id="submitted" style="align-self: center;">
+  <div class="submit-overlay">
+  </div>
+  <div class="content">
+
+    <br>
+    <p>Thank you for your interest! Kindly wait for us to contact you to confirm your reservation details.</p>
+    <div class="btn-holder">
+      <a href="index_durungawan.html"class="popup-btn"> Home </a>
+      <a onclick="togglePopup()" class="popup-btn"> Close </a>
+    </div>
+    
+  </div>
+ </div>
+
+
+
+
+  <!-- form -->
+  <section class="book-now" id="book-now">
+    <div class="form">
+      <h1 class="heading">Create an Appointment</h1>
+      <div>
+        <form class="form-top">
+          <select>
+            <option value="">Ortigas Branch</option>
+            <option value="">Makati Branch</option>
+            <option value="">Pasay Branch</option>
+            <option value="">Alabang Branch</option>
+            <option value="">BGC Branch</option>
+            <option value="">Cebu Branch</option>
+            <option value="">Davao del Sur Branch</option>
+          </select>
+          <select>
+            <option value="">Routine Check-up</option>
+            <option value="">Follow-Up</option>
+            <option value="">Specialist Referral</option>
+            <option value="">Diagnostic Testing</option>
+            <option value="">Telemedicine</option>
+            <option value="">Medication Management</option>
+            <option value="">Therapy/Counseling</option>
+            <option value="">Pre/Post-Op Visit</option>
+            <option value=""></option>
+          </select>
+        </form>
+          <div class="form-holder">
+            <div>
+            <form>
+              <select name="" id="">
+                <option value="">1 person</option>
+                <option value="">2 persons</option>
+                <option value="">4 persons</option>
+                <option value="">6 persons</option>
+                <option value="">8 persons</option>
+                <option value="">10 persons</option>
+                <option value="">10+ persons</option>
+              </select>
+              <select name="" id="">
+                <option value="">10 AM - 12 NN</option>
+                <option value="">12 NN - 2 PM</option>
+                <option value="">6 PM - 8 PM</option>
+              </select>
+              <input type="text" name="" placeholder="Phone">
+            </form>
+            </div>
+            
+            <div>
+            <form>
+              <select name="" id="">
+                <option value="">May 5, 2023</option>
+                <option value="">May 12, 2023</option>
+                <option value="">May 24, 2023</option>
+                <option value="">June 5, 2023</option>
+                <option value="">June 13, 2023</option>
+                <option value="">June 14, 2023</option>
+                <option value="">June 20, 2023</option>
+                <option value="">June 26, 2023</option>
+                <option value="">July 7, 2023</option>
+              </select>
+              <input type="text" name="" id="" placeholder="Name">
+              <input type="email" name="" id="" placeholder="Email">
+            </form>
+            </div>
+          </div>
+  
+          <center><button class="btn" onclick="togglePopup()" id="submit">SUBMIT</button></center>
+        </div>
+        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          <br> incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p> -->
+          
+      </div>
+  </section>
+    
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <section class="footer" id="footer">
+    <span class="footlogo">Durungawan</span>
+    
+    
+    <div class="footer-container">
+      
+      <div>
+        <h3>Navigation Links</h3>
+        <a href="our-story.html" class="footer-link">Our Story</a><br>
+        <a href="featured.html" class="footer-link">Featured</a><br>
+        <a href="menu.html" class="footer-link">Menu</a><br>
+        <a href="team.html" class="footer-link">Team</a><br>
+        <a href="book-now.html" class="footer-link">Reservations</a><br>
+        
+      </div>
+      <div>
+        
+        <h3>Get the latest news and offers from us</h3>
+        <input type="email" placeholder="Enter your email">
+        <ul>
+          <li><a href="" class="bx bxl-twitter"></a></li>
+          <li><a href="" class="bx bxl-instagram"></a></li>
+          <li><a href="" class="bx bxl-facebook-circle"></a></li>
+          <li><a href="" class="bx bxl-linkedin-square"></a></li>
+        </ul>
+        
+        
+      </div>
+
+      <div>
+        <h3>Contact Us</h3>
+        <span>+63 995 9616683</span>
+        <span>859 1234</span>
+        <span><a href="mailto:durungawan@gmail.com">durungawan@gmail.com</a></span>
+        <span>durungawan-restaurants.com.ph</span>
+      </div>
+    </div>
+    <br>
+    <p>&copy;2023 Reserved by Syntax Explorer</p>
+</section>
+
+
+<a href="#"><button class="topbtn" title="Back to Top"><i class="fa-solid fas fa-angle-up"></i></button></a>
+</body>
+<script type="text/javascript" src="script_durungawan.js"></script>
+</html>
