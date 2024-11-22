@@ -180,7 +180,7 @@
             if (diagnosticLab === "teleconsult") {
                 // Handle teleconsultation and generate Google Meet link
                 try {
-                    const response = await fetch("book_appointment.php", {
+                    const response = await fetch("http://healthconnect.infinityfreeapp.com/book_appointment.php", {
                         method: "POST",
                         body: formData
                     });
@@ -204,7 +204,7 @@
             } else {
                 // Handle face-to-face appointment
                 try {
-                    const response = await fetch("book_appointment.php", {
+                    const response = await fetch("http://healthconnect.infinityfreeapp.com/book_appointment.php", {
                         method: "POST",
                         body: formData
                     });
@@ -236,7 +236,7 @@
             hospitalSelect.innerHTML = '<option value="">Select Hospital</option>';
         
             if (diagnosticLab) {
-                const response = await fetch(`get_hospitals.php?diagnostic_lab=${diagnosticLab}`);
+                const response = await fetch(`http://healthconnect.infinityfreeapp.com/get_hospitals.php?diagnostic_lab=${diagnosticLab}`);
                 const hospitals = await response.json();
         
                 hospitals.forEach(hospital => {
@@ -254,7 +254,7 @@
             doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
         
             if (hospitalId) {
-                const response = await fetch(`get_doctors.php?hospital_id=${hospitalId}`);
+                const response = await fetch(`http://healthconnect.infinityfreeapp.com/get_doctors.php?hospital_id=${hospitalId}`);
                 const doctors = await response.json();
         
                 doctors.forEach(doctor => {
@@ -272,7 +272,7 @@
             scheduleSelect.innerHTML = '<option value="">Select Schedule</option>';
         
             if (doctorId) {
-                const response = await fetch(`get_schedule.php?doctor_id=${doctorId}`);
+                const response = await fetch(`http://healthconnect.infinityfreeapp.com/get_schedule.php?doctor_id=${doctorId}`);
                 const schedules = await response.json();
         
                 schedules.forEach(schedule => {
@@ -292,7 +292,7 @@
         <div class="form-container">
             <h2 class="reg-heading">Book an Appointment</h2>
     
-    <form id="appointment_form" action="save_appointment.php"   onsubmit="submitAppointment(event)">
+    <form id="appointment_form" action="http://healthconnect.infinityfreeapp.com/save_appointment.php"   onsubmit="submitAppointment(event)">
         <div class="form-group">
             <label for="diagnostic_lab">Diagnostic Lab:</label>
         <select id="diagnostic_lab" name="diagnostic_lab" onchange="loadHospitals()" required>
