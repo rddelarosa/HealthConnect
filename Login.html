@@ -48,7 +48,7 @@
 <section class="auth-section">
   <div class="form-container">
     <h1>Hello, ready to Connect!</h1><br>
-    <form id="authForm" action="http://healthconnect.infinityfreeapp.com/process_login.php" method="post">
+    <form id="authForm" onsubmit="submitLogin(event)">
       <div class="form-group">
         <label for="username">Username or Email:</label>
         <input type="text" id="username" name="username" required>
@@ -76,7 +76,9 @@
 <div id="response"></div>
 
 <script>
-function submitLogin() {
+function submitLogin(event) {
+    event.preventDefault();  // Prevent the default form submission
+
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
