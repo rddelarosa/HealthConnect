@@ -77,32 +77,37 @@
 
 <script>
 function submitLogin(event) {
-    event.preventDefault();  // Prevent the default form submission
+    event.preventDefault();  // Prevent the form from submitting
 
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
-    // Make an AJAX POST request
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://healthconnect.infinityfreeapp.com/process_login.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    console.log("Username: " + username + ", Password: " + password);  // Debugging log
 
-    // Send the form data to PHP
-    xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
-
-    // Handle response
-    xhr.onload = function() {
-        if (xhr.status == 200) {
-            // If login was successful, redirect via JS or show the success message
-            if (xhr.responseText.includes('Login successful')) {
-                window.location.href = "https://rddelarosa.github.io/HealthConnect/dashboard.html";
-            } else {
-                document.getElementById("response").innerHTML = xhr.responseText; // Show error message
-            }
+    // Use fetch API to send POST request
+    fetch("https://healthconnect.infinityfreeapp.com/process_login.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+            username: username,
+            password: password
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Response: " + data);  // Debugging: log the response
+        if (data.includes('Login successful')) {
+            window.location.href = "https://rddelarosa.github.io/HealthConnect/dashboard.html";
         } else {
-            document.getElementById("response").innerHTML = "Error occurred during login.";
+            document.getElementById("response").innerHTML = data;
         }
-    };
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("response").innerHTML = "Error occurred during login.";
+    });
 }
 </script>
 
