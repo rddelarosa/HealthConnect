@@ -1,0 +1,25 @@
+<form id="appointmentForm">
+    <input type="text" name="diagnostic_lab" placeholder="Diagnostic Lab" required>
+    <select name="hospital_id" required>
+        <option value="A">Hospital A</option>
+        <option value="B">Hospital B</option>
+    </select>
+    <input type="number" name="doctor_id" placeholder="Doctor ID" required>
+    <input type="datetime-local" name="appointment_schedule" required>
+    <textarea name="chief_complaint" placeholder="Chief Complaint" required></textarea>
+    <input type="hidden" name="gmeet_link" value="https://meet.google.com/example-link">
+    <button type="submit">Book Appointment</button>
+</form>
+
+<script>
+document.getElementById('appointmentForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const response = await fetch('save_appointment.php', {
+        method: 'POST',
+        body: formData
+    });
+    const result = await response.json();
+    alert(result.message);
+});
+</script>

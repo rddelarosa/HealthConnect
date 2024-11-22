@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Durungawan</title>
+  <link href="style_durungawan.css" rel="stylesheet" type="text/css" />
+  <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet"
+  href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  
+</head>
+
+<style>
+    header{
+      background: #000000;
+      height: 80px;
+    }
+
+/* FEATURED */
+
+.grid-gallery {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 50px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 250px;
+  grid-auto-flow: dense;
+  grid-gap: 20px;
+}
+
+.grid-gallery .grid-item {
+  position: relative;
+  background-color: #efefef;
+  overflow: hidden;
+}
+
+.grid-gallery .grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.grid-gallery .grid-item:hover img {
+  transform: scale(1.1);
+}
+
+.grid-gallery .grid-item a {
+  cursor: zoom-in;
+}
+
+.grid-gallery .grid-item:nth-child(3n - 2) {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* Let's make it responsive */
+@media (max-width: 768px) {
+  .grid-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 250px;
+  }
+
+  .grid-gallery .grid-item:nth-child(3n - 2) {
+    grid-column: unset;
+    grid-row: unset;
+  }
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  position: absolute;
+  top: 13%;
+  right: 30px;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cursor {
+  cursor: pointer;
+}
+
+/* Hide the slides by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+img.demo {
+  opacity: 0.6;
+  width:100%;
+  height: 45px;
+  padding: 0 6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+img.hover-shadow {
+  transition: 0.3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Thumbnail */
+
+.column {
+  float: left;
+  width: 5.55%;
+}
+
+/* special events */
+.special-events {
+  background-color: #000000;
+  padding: 50px;
+  text-align: center;
+}
+
+.special-events h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.special-events ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.special-events li {
+  font-size: 1.2rem;
+  margin: 10px;
+  padding: 20px;
+  background-color: #9a9a9a;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  flex-basis: 300px;
+}
+
+.special-events li:hover {
+  background-color: var(--red);
+}
+
+/* special events pop up information */
+
+.info-box {
+display: none;
+position: absolute;
+background-color: #000000;
+color: #ffffff;
+border: 1px solid #ffffff;
+padding: 10px;
+z-index: 1;
+}
+
+li.event:hover .info-box {
+display: block;
+}
+
+
+</style>
+
+<body>
+
+  <header class="header">
+    <div class="bx bx-menu" id="menu-icon">
+      </div>
+      <a href="index_HC.html" class="logo"> <img src="HC_img/HC.png" alt="Logo" class="logo-img" /> <span class="logo-text"> HealthConnect</span> </a>
+
+    <ul class="navbar">
+      <li>
+        <a class="active" href="index_HC.html">Home</a>
+      </li>
+      <li>
+        <a class="active" href="Appoint.html">Appointment</a>
+      </li>
+      <li>
+        <a class="active" href="Health_FAQ.html">Resources</a>
+      </li>
+      <li>
+        <a class="active" href="AboutUs.html">About Us</a>
+      </li>
+    </ul>
+    <div class="main">
+      <a href="Appoint.html"><i class="ri-bookmark-fill"></i>Book Now</a>
+    </div>
+  </header>
+
+
+  <!-- header with the quote -->
+  <br><br><br><br>
+  <section class="ourstorypage">
+    <div class="storybehind">
+      <br><br><br><br><p>Experience the Philippines in every bite with the taste of our innovative dishes.</p>
+    </div>
+  </section>
+
+  <!-- Start of Featured Page -->
+
+  <!--html code for the special events-->
+<div class="events">
+  <section class="special-events">
+    <h2>SPECIAL EVENTS</h2>
+    <ul>
+      <li class="event" id="monday">
+        Monday Madness
+        <div class="info-box">
+          <h5>- MONDAY MADNESS -</h5>
+          <p>Join us on Mondays for half-priced appetizers!</p>
+          <p>"Start your week off on the right foot with Monday Madness! <br> Not only will you get half-priced appetizers, <br> but you'll also enjoy our lively atmosphere and friendly staff. <br> <br> Come unwind with us and start the week with a bang!"</p>
+        </div>
+      </li>
+      <li class="event" id="tuesday">
+        Tasty Tuesday
+        <div class="info-box">
+          <h5>- TASTY TUESDAY -</h5>
+          <p>Enjoy our chef's special menu items every Tuesday!</p>
+          <P>"Indulge in our chef's mouth-watering creations every Tuesday with Tasty Tuesday! <br> From savory entrees to decadent desserts, <br> our special menu items will leave your taste buds singing. <br> <br> Don't miss out on this delicious experience!"</P>
+        </div>
+      </li>
+      <li class="event" id="wednesday">
+        Wine Wednesday
+        <div class="info-box">
+          <h5>- WINE WEDNESDAY -</h5>
+          <p>Get 50% off any bottle of wine on Wednesdays!</p>
+          <P>"Raise a glass to hump day with Wine Wednesday! <br> Take advantage of our unbeatable offer and savor the flavors of our extensive wine selection. <br> <br> Whether you're a wine connoisseur or just looking for a fun night out, <br> Wine Wednesday is the perfect mid-week escape."</P>
+        </div>
+      </li>
+      <li class="event" id="thursday">
+        Thirsty Thursday
+        <div class="info-box">
+          <h5>- THIRSTY THURSDAY -</h5>
+          <p>Enjoy 20% off all drinks every Thursday night!</p>
+          <p>"Quench your thirst and let loose with Thirsty Thursday! <br> Enjoy 20% off all drinks, including our signature cocktails and ice-cold beers. <br> <br> With great company and even better drinks, <br> Thursday nights have never been better!"</p>
+        </div>
+      </li>
+      <li class="event" id="friday">
+        Friday Fiesta
+        <div class="info-box">
+          <h5>- FRIDAY FIESTA -</h5>
+          <p>Celebrate the start of the weekend with our Friday night party!</p>
+          <p>"Join the party and kick off the weekend with Friday Fiesta! <br> Our vibrant atmosphere, live music, and delicious food and drinks will transport you to a tropical paradise. <br> <br> Let loose and dance the night away with us!"</p>
+        </div>
+      </li>
+      <li class="event" id="weekend">
+        Weekend Brunch
+        <div class="info-box">
+          <h5>- WEEKEND BRUNCH -</h5>
+          <p>Join us for a delicious brunch every Saturday and Sunday!</p>
+          <p>"Rise and shine with our Weekend Brunch! <br> Treat yourself to our mouth-watering brunch menu, <br> featuring everything from classic favorites to innovative twists. <br> <br> And don't forget to indulge in our signature brunch cocktails <br> - they're the perfect complement to a lazy weekend morning."</p>
+        </div>
+      </li>
+    </ul>
+  </section> 
+</div>
+
+<!-- 
+<div class="popup">
+  <div class="popup-content">
+    <span class="close-button">&times;</span>
+  </div>
+</div> 
+-->
+
+    <div class="grid-gallery">
+      <div class="grid-item">
+        <img src="durungawan_images/wood.jpg" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/grate.jpg" onclick="openModal();currentSlide(2)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/spoon.jpg" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/adobo-full.jpg" onclick="openModal();currentSlide(4)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/kinilaw.jpg" onclick="openModal();currentSlide(5)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/baby.jpg" onclick="openModal();currentSlide(6)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/chef.jpg" onclick="openModal();currentSlide(7)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/ilaw.jpg" onclick="openModal();currentSlide(8)" class="hover-shadow cursor">
+      </div><div class="grid-item">
+        <img src="durungawan_images/lamp.jpg" onclick="openModal();currentSlide(9)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="https://nolisoli.ph/wp-content/uploads/2019/11/Gallery-by-Chele-recolor-2.jpg" onclick="openModal();currentSlide(10)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/pagpag.jpg" onclick="openModal();currentSlide(11)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/chairs.jpg" onclick="openModal();currentSlide(12)" class="hover-shadow cursor">
+      </div><div class="grid-item">
+        <img src="durungawan_images/cocoa.jpg" onclick="openModal();currentSlide(13)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/lakad.jpg" onclick="openModal();currentSlide(14)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/dagat.jpg" onclick="openModal();currentSlide(15)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/roots.jpg" onclick="openModal();currentSlide(16)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/tart.jpg" onclick="openModal();currentSlide(17)" class="hover-shadow cursor">
+      </div>
+      <div class="grid-item">
+        <img src="durungawan_images/cacao.jpg" onclick="openModal();currentSlide(18)" class="hover-shadow cursor">
+      </div>
+    </div>
+
+    <!-- The Modal/Lightbox -->
+    <div id="myModal" class="modal">
+      <span class="close cursor" onclick="closeModal()">&times;</span>
+      <div class="modal-content">
+    
+        <div class="mySlides">
+          <div class="numbertext">1 / 18</div>
+          <img src="durungawan_images/wood.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">2 / 18</div>
+          <img src="durungawan_images/grate.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">3 / 18</div>
+          <img src="durungawan_images/spoon.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">4 / 18</div>
+          <img src="durungawan_images/adobo-full.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">5 / 18</div>
+          <img src="durungawan_images/kinilaw.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">6 / 18</div>
+          <img src="durungawan_images/baby.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">7 / 18</div>
+          <img src="durungawan_images/chef.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">8 / 18</div>
+          <img src="durungawan_images/ilaw.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">9 / 18</div>
+          <img src="durungawan_images/lamp.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">10 / 18</div>
+          <img src="https://nolisoli.ph/wp-content/uploads/2019/11/Gallery-by-Chele-recolor-2.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">11 / 18</div>
+          <img src="durungawan_images/pagpag.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">12 / 18</div>
+          <img src="durungawan_images/chairs.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">13 / 18</div>
+          <img src="durungawan_images/cocoa.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">14 / 18</div>
+          <img src="durungawan_images/lakad.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">15 / 18</div>
+          <img src="durungawan_images/dagat.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">16 / 18</div>
+          <img src="durungawan_images/roots.jpg" style="width:100%">
+        </div>
+
+        <div class="mySlides">
+          <div class="numbertext">17 / 18</div>
+          <img src="durungawan_images/tart.jpg" style="width:100%">
+        </div>
+    
+        <div class="mySlides">
+          <div class="numbertext">18 / 18</div>
+          <img src="durungawan_images/cacao.jpg" style="width:100%">
+        </div>
+    
+        <!-- Next/previous controls -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    
+        <!-- Caption text -->
+        <div class="caption-container">
+          <p id="caption"></p>
+        </div>
+    
+      <!-- Thumbnail image controls -->
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/wood.jpg" onclick="currentSlide(1)" alt="Bar">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/grate.jpg" onclick="currentSlide(2)" alt="Fresh">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/spoon.jpg" onclick="currentSlide(3)" alt="Cutlery">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/adobo-full.jpg" onclick="currentSlide(4)" alt="Adobo">
+        </div>
+
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/kinilaw.jpg" onclick="currentSlide(5)" alt="Kinilaw">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/baby.jpg" onclick="currentSlide(6)" alt="Food research lab">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/chef.jpg" onclick="currentSlide(7)" alt="Creative thinking">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/ilaw.jpg" onclick="currentSlide(8)" alt="Utmost precision">
+        </div>
+
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/lamp.jpg" onclick="currentSlide(9)" alt="Mise-en-place">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="https://nolisoli.ph/wp-content/uploads/2019/11/Gallery-by-Chele-recolor-2.jpg" onclick="currentSlide(10)" alt="Main Gallery">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/pagpag.jpg" onclick="currentSlide(11)" alt="Exquisite service">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/chairs.jpg" onclick="currentSlide(12)" alt="Chairs">
+        </div>
+
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/cocoa.jpg" onclick="currentSlide(13)" alt="Opened cocoa pods">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/lakad.jpg" onclick="currentSlide(14)" alt="Sea">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/dagat.jpg" onclick="currentSlide(15)" alt="Aerial drone shot">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/roots.jpg" onclick="currentSlide(16)" alt="Kamote">
+        </div>
+
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/tart.jpg" onclick="currentSlide(17)" alt="Calamansi Meringue Tart">
+        </div>
+    
+        <div class="column">
+          <img class="demo cursor" src="durungawan_images/cacao.jpg" onclick="currentSlide(18)" alt="Fresh local ingredients">
+        </div>
+      </div>
+    </div>
+
+<!-- special events-->
+
+    <script>
+      // Open the Modal
+      function openModal() {
+        document.getElementById("myModal").style.display = "block";
+      }
+      
+      // Close the Modal
+      function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+      }
+      
+      var slideIndex = 1;
+      showSlides(slideIndex);
+      
+      // Next/previous controls
+      function plusSlides(n) {
+        showSlides(slideIndex += n);
+      }
+      
+      // Thumbnail image controls
+      function currentSlide(n) {
+        showSlides(slideIndex = n);
+      }
+      
+      function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        var captionText = document.getElementById("caption");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+        captionText.innerHTML = dots[slideIndex-1].alt;
+      }
+      </script>
+      </div>
+    </div>
+
+<!-- JavaScript: -->
+<script>
+  const events = document.querySelectorAll('.event');
+  const popup = document.querySelector('.popup');
+  const popupContent = document.querySelector('.popup-content');
+  const closeButton = document.querySelector('.close-button');
+
+  events.forEach(event => {
+  const infoBox = event.querySelector('.info-box');
+
+  event.addEventListener('click', () => {
+  popup.style.display = 'block';
+  popupContent.innerHTML = infoBox.innerHTML;
+  });
+  });
+
+  closeButton.addEventListener('click', () => {
+  popup.style.display = 'none';
+  });
+
+</script>
+
+
+<section class="footer" id="footer">
+  <span class="footlogo">Durungawan</span>
+  
+  
+  <div class="footer-container">
+    
+    <div>
+      <h3>Navigation Links</h3>
+      <a href="our-story.html" class="footer-link">Our Story</a><br>
+      <a href="featured.html" class="footer-link">Featured</a><br>
+      <a href="menu.html" class="footer-link">Menu</a><br>
+      <a href="team.html" class="footer-link">Team</a><br>
+      <a href="book-now.html" class="footer-link">Reservations</a><br>
+      
+    </div>
+    <div>
+      
+      <h3>Get the latest news and offers from us</h3>
+      <input type="email" placeholder="Enter your email">
+      <ul>
+        <li><a href="" class="bx bxl-twitter"></a></li>
+        <li><a href="" class="bx bxl-instagram"></a></li>
+        <li><a href="" class="bx bxl-facebook-circle"></a></li>
+        <li><a href="" class="bx bxl-linkedin-square"></a></li>
+      </ul>
+      
+      
+    </div>
+
+    <div>
+      <h3>Contact Us</h3>
+      <span>+63 995 9616683</span>
+      <span>859 1234</span>
+      <span><a href="mailto:durungawan@gmail.com">durungawan@gmail.com</a></span>
+      <span>durungawan-restaurants.com.ph</span>
+    </div>
+  </div>
+  <br>
+  <p>&copy;2023 Reserved by Syntax Explorer</p>
+</section>
+
+<!-- scroll to top -->
+<a href="#"><button class="topbtn" title="Back to Top"><i class="fa-solid fas fa-angle-up"></i></button></a>
+
+</body>
+
+<script type="text/javascript" src="script_durungawan.js"></script>
+</body>
+
+
+</html>
