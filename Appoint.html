@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appointment</title>
+  <link rel="stylesheet" type="text/css" href="style_HC.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet"
+  href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+
+
+<style>
+  header{
+        background: #03426a ;
+        height: 80px;
+      }
+
+    </style>
+
+    <header class="header">
+      <div class="bx bx-menu" id="menu-icon">
+        </div>
+        <a href="index.html" class="logo"> <img src="HC_img/HC (4).png" alt="Logo" class="logo-img" /> <span class="logo-text"> HealthConnect</span> </a>
+      <ul class="navbar">
+        <li>
+          <a class="active" href="index.html">Home</a>
+        </li>
+        <li>
+          <a class="active" href="Appoint.html">Appointment</a>
+        </li>
+        <li>
+          <a class="active" href="Health_FAQ.html">Resources</a>
+        </li>
+        <li>
+          <a class="active" href="AboutUs.html">About Us</a>
+        </li>
+      </ul>
+      <div class="main">
+        <a href="Login.html"><i class="ri-bookmark-fill"></i>Sign In</a>
+      </div>
+    </header>
+  
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f8fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .auth-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            background-color: #f4f8fc;
+        }
+
+        .choice-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .choice-container button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .choice-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .form-wrapper {
+            display: none;
+            justify-content: center;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #007BFF;
+        }
+
+        .heading {
+            text-align: center;
+            color: #007BFF;
+            font-family: 'Arial', sans-serif;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-section input,
+        .form-section select {
+            margin-bottom: 10px;
+        }
+
+        .form-section h3 {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .form-actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        .form-actions button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Sign In or Create Account Selection -->
+<section class="auth-section" id="book-now">
+    
+    <div class="choice-container" id="choice-container">
+      <h1 class="heading">Sign In or Create Account</h1>
+        <button id="sign-in-btn">Sign In</button>
+        <button id="create-account-btn">Create Account</button>
+    </div>
+</section>
+<!-- Sign In Form -->
+<section class="form-wrapper" id="sign-in-form">
+    <div class="form-container">
+        <h2 class="heading">Sign In</h2>
+        <form id="sign-in">
+            <div class="form-section">
+                <label for="sign-in-email">Email or Username</label>
+                <input type="email" id="sign-in-email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-section">
+                <label for="sign-in-password">Password</label>
+                <input type="password" id="sign-in-password" placeholder="Enter your password" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn">Sign In</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Create Account Form -->
+<section class="form-wrapper" id="create-account-form">
+    <div class="form-container">
+        <h2 class="heading">Create an Account</h2>
+        <form id="create-account">
+            <div class="form-section">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" placeholder="Enter your first name" required>
+            </div>
+            <div class="form-section">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" placeholder="Enter your last name" required>
+            </div>
+            <div class="form-section">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" required>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="back-to-choice">Back</button>
+                <button type="submit" class="btn">Next</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Personal Details Form (for Create Account) -->
+<section class="form-wrapper" id="personal-details-form">
+    <div class="form-container">
+        <h2 class="heading">Personal Details</h2>
+        <form id="personal-details">
+            <div class="form-section">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-section">
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="back-to-create">Back</button>
+                <button type="submit" class="btn">Next</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Consultation Details Form (After Sign In or Create Account) -->
+<section class="form-wrapper" id="consultation-details-form">
+    <div class="form-container">
+        <h2 class="heading">Consultation Details</h2>
+        <form id="consultation-details">
+            <div class="form-section">
+                <label for="consultation-type">Consultation Type</label>
+                <select id="consultation-type">
+                    <option value="online">Online</option>
+                    <option value="face-to-face">Face-to-Face</option>
+                </select>
+            </div>
+            <div class="form-section">
+                <label for="preferred-date">Preferred Date</label>
+                <input type="date" id="preferred-date" required>
+            </div>
+            <div class="form-section">
+                <label for="preferred-time">Preferred Time</label>
+                <select id="preferred-time">
+                    <option value="10:00">10:00 AM</option>
+                    <option value="12:00">12:00 PM</option>
+                    <option value="14:00">2:00 PM</option>
+                </select>
+            </div>
+            <div class="form-section">
+                <label for="duration">Duration</label>
+                <select id="duration">
+                    <option value="15-minutes">15 minutes</option>
+                    <option value="30-minutes">30 minutes</option>
+                    <option value="1-hour">1 hour</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="back-to-personal-details">Back</button>
+                <button type="submit" class="btn">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    // Show the selected form and hide the choice buttons
+    document.getElementById("sign-in-btn").addEventListener("click", function() {
+        document.getElementById("choice-container").style.display = "none";
+        document.getElementById("sign-in-form").style.display = "flex";
+    });
+
+    document.getElementById("create-account-btn").addEventListener("click", function() {
+        document.getElementById("choice-container").style.display = "none";
+        document.getElementById("create-account-form").style.display = "flex";
+    });
+
+    // Handle navigation in Create Account
+    document.getElementById("back-to-choice").addEventListener("click", function() {
+        document.getElementById("create-account-form").style.display = "none";
+        document.getElementById("choice-container").style.display = "flex";
+    });
+
+    // Proceed to Personal Details after Create Account
+    document.getElementById("create-account").addEventListener("submit", function(e) {
+        e.preventDefault();
+        document.getElementById("create-account-form").style.display = "none";
+        document.getElementById("personal-details-form").style.display = "flex";
+    });
+
+    // Handle navigation in Personal Details
+    document.getElementById("back-to-create").addEventListener("click", function() {
+        document.getElementById("personal-details-form").style.display = "none";
+        document.getElementById("create-account-form").style.display = "flex";
+    });
+
+    // Proceed to Consultation Details after Personal Details
+    document.getElementById("personal-details").addEventListener("submit", function(e) {
+        e.preventDefault();
+        document.getElementById("personal-details-form").style.display = "none";
+        document.getElementById("consultation-details-form").style.display = "flex";
+    });
+
+    // Handle form submission for Consultation Details
+    document.getElementById("consultation-details").addEventListener("submit", function(e) {
+        e.preventDefault();
+        alert("Consultation booked successfully!");
+    });
+
+    // Handle navigation in Consultation Details
+    document.getElementById("back-to-personal-details").addEventListener("click", function() {
+        document.getElementById("consultation-details-form").style.display = "none";
+        document.getElementById("personal-details-form").style.display = "flex";
+    });
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Appointment</title>
+</head>
+<body>
+  <h1>Book Your Appointment</h1>
+  <button id="bookAppointmentBtn">Book Appointment</button>
+  <div id="appointmentDetails"></div>
+
+  <script>
+    document.getElementById('bookAppointmentBtn').addEventListener('click', function () {
+      fetch('/book-appointment')  // Send request to the backend to book an appointment
+        .then(response => response.json())  // Get the response as JSON
+        .then(data => {
+          if (data.meetLink) {
+            // Display the Google Meet link
+            document.getElementById('appointmentDetails').innerHTML = 
+              `Your Google Meet link: <a href="${data.meetLink}" target="_blank">${data.meetLink}</a>`;
+          } else {
+            // If there's an error, show the error message
+            document.getElementById('appointmentDetails').innerHTML = 'Error: ' + data.error;
+          }
+        })
+        .catch(error => {
+          // Handle any other errors
+          document.getElementById('appointmentDetails').innerHTML = 'Error: ' + error;
+        });
+    });
+  </script>
+
+  <script src="app.js"></script>  <!-- Ensure this file exists -->
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- thank you message -->
+
+ <div class="submitted" id="submitted" style="align-self: center;">
+  <div class="submit-overlay">
+  </div>
+  <div class="content">
+
+    <br>
+    <p>Thank you for your interest! Kindly wait for us to contact you to confirm your reservation details.</p>
+    <div class="btn-holder">
+      <a href="index_durungawan.html"class="popup-btn"> Home </a>
+      <a onclick="togglePopup()" class="popup-btn"> Close </a>
+    </div>
+    
+  </div>
+ </div>
+
+
+
+
+  <!-- form -->
+  <section class="book-now" id="book-now">
+    <div class="form">
+      <h1 class="heading">Create an Appointment</h1>
+      <div>
+        <form class="form-top">
+          <select>
+            <option value="">Ortigas Branch</option>
+            <option value="">Makati Branch</option>
+            <option value="">Pasay Branch</option>
+            <option value="">Alabang Branch</option>
+            <option value="">BGC Branch</option>
+            <option value="">Cebu Branch</option>
+            <option value="">Davao del Sur Branch</option>
+          </select>
+          <select>
+            <option value="">Routine Check-up</option>
+            <option value="">Follow-Up</option>
+            <option value="">Specialist Referral</option>
+            <option value="">Diagnostic Testing</option>
+            <option value="">Telemedicine</option>
+            <option value="">Medication Management</option>
+            <option value="">Therapy/Counseling</option>
+            <option value="">Pre/Post-Op Visit</option>
+            <option value=""></option>
+          </select>
+        </form>
+          <div class="form-holder">
+            <div>
+            <form>
+              <select name="" id="">
+                <option value="">1 person</option>
+                <option value="">2 persons</option>
+                <option value="">4 persons</option>
+                <option value="">6 persons</option>
+                <option value="">8 persons</option>
+                <option value="">10 persons</option>
+                <option value="">10+ persons</option>
+              </select>
+              <select name="" id="">
+                <option value="">10 AM - 12 NN</option>
+                <option value="">12 NN - 2 PM</option>
+                <option value="">6 PM - 8 PM</option>
+              </select>
+              <input type="text" name="" placeholder="Phone">
+            </form>
+            </div>
+            
+            <div>
+            <form>
+              <select name="" id="">
+                <option value="">May 5, 2023</option>
+                <option value="">May 12, 2023</option>
+                <option value="">May 24, 2023</option>
+                <option value="">June 5, 2023</option>
+                <option value="">June 13, 2023</option>
+                <option value="">June 14, 2023</option>
+                <option value="">June 20, 2023</option>
+                <option value="">June 26, 2023</option>
+                <option value="">July 7, 2023</option>
+              </select>
+              <input type="text" name="" id="" placeholder="Name">
+              <input type="email" name="" id="" placeholder="Email">
+            </form>
+            </div>
+          </div>
+  
+          <center><button class="btn" onclick="togglePopup()" id="submit">SUBMIT</button></center>
+        </div>
+        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+          <br> incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p> -->
+          
+      </div>
+  </section>
+    
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <!-- Footer that shows all the social Platforms-->
+  <section class="footer" id="footer">
+    <span class="footlogo">HealthConnect</span>
+    
+     <div class="footer-container">
+      
+      <div>
+        <h3>Navigation Links</h3>
+        <a href="Appoint.html" class="footer-link">Appointment</a><br>
+        <a href="Health_FAQ.html" class="footer-link">Resources</a><br>
+        <a href="AboutUs.html" class="footer-link">About Us</a><br>
+     
+   
+
+      </div>
+      <div>
+        
+        <h3>Stay connected with us! Follow us on social media for updates!
+        </h3>
+        <ul>
+          <li><a href="https://www.instagram.com/healthconnect.ph/profilecard" target="_blank" class="bx bxl-instagram"></a></li>
+          <li><a href="https://www.instagram.com/healthconnect.ph/profilecard" target="_blank" class="bx bxl-facebook-circle"></a></li>
+          <li><a href="https://www.tiktok.com/@healthconnect.ph?_t=8r8fhJ9zaWm&_r=1" target="_blank" class="bx bxl-tiktok"></a></li> 
+        
+      </div>
+
+      <div>
+        <h3>Contact Us</h3>
+        <span>+63 995 9616683</span>
+        <span>859 1234</span>
+        <span>
+          <address>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=healthyconnect.ph@gmail.com" target="_blank">
+                  healthyconnect.ph@gmail.com
+              </a>
+          </address>
+      </span>
+              <span>HealthConnect.com.ph</span>
+      </div>
+    </div>
+    <br>
+    <p>&copy;2024 Reserved by Connect to Juan</p>
+  </section>
+
+
+<a href="#"><button class="topbtn" title="Back to Top"><i class="fa-solid fas fa-angle-up"></i></button></a>
+</body>
+<script type="text/javascript" src="script_HC.js"></script>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - HealthConnect</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <style>
+    @font-face {
+      font-family: "Etna";
+      src: url("HC_img/LeagueSpartan-Regular.ttf") format("opentype");
+  }
+    body {
+      margin: 0;
+      font-family: Etna, sans-serif;
+      height: 100vh;
+      display: flex;
+      background-color: #FAF9F6;
+    }
+
+    /* Sidebar Styling */
+    .sidebar {
+      width: 80px;
+      background-color: #03426a ;
+      color: white;
+      transition: width 0.3s;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 1000;
+    }
+
+    .sidebar:hover:not(.frozen) {
+      width: 250px;
+    }
+
+    .sidebar .logo {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .sidebar .logo img {
+      width: 40px;
+    }
+
+    .sidebar .burger-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+      z-index: 1100;
+      display: none; /* Hidden by default */
+    }
+
+    .sidebar:hover:not(.frozen) .burger-icon {
+      display: block; /* Display only when sidebar expands */
+      margin-top: 5%;
+      margin-right: 5%;
+    }
+
+    .sidebar.frozen .burger-icon {
+      display: block;
+      margin-top: 5%;
+      margin-right: 5%;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 50px 0 0 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .sidebar ul li:hover {
+      background-color: #357ca5;
+    }
+
+    .sidebar ul li i {
+      font-size: 1.5rem;
+      margin-right: 10px;
+    }
+
+    .sidebar ul li span {
+      font-size: 1.5rem;
+
+      white-space: nowrap;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .sidebar:hover:not(.frozen) ul li span {
+      opacity: 1;
+    }
+
+    .sidebar.frozen {
+      width: 250px;
+    }
+
+    .sidebar.frozen ul li span {
+      opacity: 1;
+    }
+
+    /* Main Content Container */
+    .content-container {
+      margin: auto;
+      width: 60%;
+      max-width: 800px;
+      text-align: center;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+
+    .content-container h1 {
+      margin-bottom: 10px;
+      color: #03426a;
+      font-size: 2rem;
+    }
+
+    .content-container p {
+      font-size: 1.7rem;
+      margin-bottom: 20px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .visible {
+      display: block;
+    }
+
+    /* Ensure layout consistency */
+    .wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    table th, table td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #ddd;
+      font-size: 1.5rem;
+    }
+  </style>
+
+
+  <style>
+    /* Modal Styles */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 5; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+      overflow: auto; /* Enable scroll if needed */
+      padding-top: 100px;
+    }
+  
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 60%; /* Adjust width as needed */
+      text-align: center;
+    }
+  
+    .modal button {
+      padding: 10px 20px;
+      background-color: #3c8dbc;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  
+    .modal button:hover {
+      background-color: #357ca5;
+    }
+  </style>
+  
+</head>
+        <!-- Logout Confirmation Modal -->
+        <div id="logoutModal" class="modal">
+          <div class="modal-content">
+            <h2>You have successfully logged out!</h2>
+            <p>Click "OK" to go back to the login page.</p>
+            <button onclick="goToLogin()">OK</button>
+          </div>
+        </div>
+
+<body>
+    <!-- Sidebar -->
+
+
+    <div class="sidebar" id="sidebar">
+      <i class="burger-icon fas fa-bars" onclick="toggleFreeze()" id="burgerIcon"></i>
+      <div class="logo">
+        <img src="HC_img/HC (4).png" alt="Logo">
+      </div>
+      <ul>
+        <li onclick="showContent('account')">
+          <i class="fas fa-user"></i><span>Account Details</span>
+        </li>
+        <li onclick="showContent('appointments')">
+          <i class="fas fa-calendar-check"></i><span>Appointments</span>
+        </li>
+        <li onclick="showContent('history')">
+          <i class="fas fa-file-medical-alt"></i><span>Medical History</span>
+        </li>
+        <li onclick="showContent('settings')">
+          <i class="fas fa-cogs"></i><span>Settings</span>
+        </li>
+        <li onclick="showLogoutConfirmation()">
+            <i class="fas fa-sign-out-alt"></i><span>Logout</span></li>
+        </li>
+      </ul>
+    </div>
+
+
+  
+    <!-- Main Content -->
+    <div class="wrapper">
+      <!-- Account Details -->
+<!-- Add this inside the Account Details section -->
+<div id="account" class="content-container visible">
+  <h1>Account Details</h1>
+  <table>
+    <tr><th>First Name</th><td id="first-name"></td></tr>
+    <tr><th>Last Name</th><td id="last-name"></td></tr>
+    <tr><th>Birthday</th><td id="birthday"></td></tr>
+    <tr><th>Emergency Contact</th><td id="emergency-contact"></td></tr>
+    <tr><th>Username</th><td id="username"></td></tr>
+    <tr><th>Gender</th><td id="gender"></td></tr>
+    <tr><th>Email</th><td id="email"></td></tr>
+    <tr><th>Phone Number</th><td id="phone"></td></tr>
+    <tr><th>Best Contact Method</th><td id="contact-method"></td></tr>
+  </table>
+  <button id="edit-btn" onclick="enableEditing()">Edit</button>
+  <button id="save-btn" class="hidden" onclick="saveDetails()">Save</button>
+</div>
+
+  
+      <!-- Appointments -->
+      <div id="appointments" class="content-container hidden">
+        <h1>Your Appointments</h1>
+        <table id="appointments-table">
+          <tr><th>Date</th><th>Time</th><th>Doctor</th><th>Chief Complaint</th><th>Diagnostic/Lab</th><th>Mode</th><th>Link/Status</th></tr>
+          <!-- Appointment data will be inserted dynamically -->
+        </table>
+        <a href="Gmeet-PHP\public\booking.html">
+          <button>Book New Appointment</button>
+        </a>
+              </div>
+  
+    <!-- Medical History -->
+    <div id="history" class="content-container hidden">
+      <h1>Medical History</h1>
+      <table>
+        <tr><th>Condition</th><th>Details</th></tr>
+        <!-- Medical history data will be inserted dynamically -->
+      </table>
+      
+      <h2>Current Medications</h2>
+      <table id="medications-table">
+        <tr><th>Name</th><th>Details</th></tr>
+        <!-- Medications data will be inserted dynamically -->
+      </table>
+
+      <h2>Allergies</h2>
+      <table id="allergies-table">
+        <tr><th>Allergy</th><th>Details</th></tr>
+        <!-- Allergies data will be inserted dynamically -->
+      </table>
+    </div>
+  </div>
+  
+      <!-- Settings -->
+      <div id="settings" class="content-container hidden">
+        <h1>Settings</h1>
+        <p>Customize your preferences here.</p>
+      </div>
+  
+      <!-- Logout -->
+      <div id="logout" class="content-container hidden">
+        <h1>Logout</h1>
+        <p>You have been logged out. <a href="Login.html">Sign in again</a>.</p>
+      </div>
+    </div>
+
+  <!-- Logout JS -->
+  <script>
+    function showLogoutConfirmation() {
+      // Show the modal
+      document.getElementById('logoutModal').style.display = 'block';
+    }
+  
+    function goToLogin() {
+      // Redirect to login page after confirmation
+      window.location.href = "login.html";
+    }
+  
+    // Close the modal if user clicks outside of the modal content (optional)
+// Close the modal if user clicks outside of the modal content
+window.onclick = function(event) {
+  const modal = document.getElementById('logoutModal');
+  
+  // Check if the click is outside of the modal content
+  if (event.target == modal) {
+    // Hide the modal
+    modal.style.display = 'none';
+    
+    // Redirect to index.html after the modal closes
+    window.location.href = "index.html";
+  }
+}
+
+  </script>
+  
+    
+  
+    <script>
+        // Fetch data from PHP backend (fetch_user_data.php)
+        fetch('fetch_user_data.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                // Populate the account details
+                document.getElementById('first-name').innerText = data.user.first_name;
+                document.getElementById('last-name').innerText = data.user.last_name;
+                document.getElementById('birthday').innerText = data.user.birthday;
+                document.getElementById('emergency-contact').innerText = data.user.emergency_contact_name;
+                document.getElementById('username').innerText = data.user.username || "N/A"; // handle missing data gracefully
+                document.getElementById('gender').innerText = data.user.gender;
+                document.getElementById('email').innerText = data.user.email;
+                document.getElementById('phone').innerText = data.user.phone_number;
+                document.getElementById('contact-method').innerText = data.user.communication;
+
+                // Handle appointments
+                const appointmentsTable = document.getElementById('appointments-table');
+                if (data.appointments.length > 0) {
+                    data.appointments.forEach(appointment => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${appointment.date}</td>
+                            <td>${appointment.time}</td>
+                            <td>${appointment.doctor}</td>
+                            <td>${appointment.mode}</td>
+                            <td>${appointment.diagnostic_lab}</td>
+                            <td>${appointment.mode}</td>
+                            <td><a href="${appointment.link}" target="_blank">Join</a></td>
+                        `;
+                        appointmentsTable.appendChild(row);
+                    });
+                } else {
+                    const noAppointmentsRow = document.createElement('tr');
+                    noAppointmentsRow.innerHTML = `<td colspan="7">No appointments found.</td>`;
+                    appointmentsTable.appendChild(noAppointmentsRow);
+                }
+
+                // Handle Medical History
+                const medicalHistoryTable = document.querySelector('#history table');
+                if (data.medical_history) {
+                    const historyRow = document.createElement('tr');
+                    historyRow.innerHTML = `
+                        <td>Hypertension</td><td>${data.medical_history.hypertension}</td>
+                    `;
+                    medicalHistoryTable.appendChild(historyRow);
+                    const diabetesRow = document.createElement('tr');
+                    diabetesRow.innerHTML = `
+                        <td>Diabetes</td><td>${data.medical_history.diabetes}</td>
+                    `;
+                    medicalHistoryTable.appendChild(diabetesRow);
+                }
+
+                // Handle Current Medications
+                const medicationsList = document.getElementById('medications-list');
+                data.current_medications.forEach(med => {
+                    const medicationItem = document.createElement('li');
+                    medicationItem.innerText = med;
+                    medicationsList.appendChild(medicationItem);
+                });
+
+                // Handle Allergies
+                const allergiesList = document.getElementById('allergies-list');
+                data.allergies.forEach(allergy => {
+                    const allergyItem = document.createElement('li');
+                    allergyItem.innerText = allergy;
+                    allergiesList.appendChild(allergyItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+
+        function toggleFreeze() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('frozen');
+        }
+
+        function showContent(id) {
+            // Hide all content
+            const sections = document.querySelectorAll('.content-container');
+            sections.forEach(section => {
+                section.classList.remove('visible');
+                section.classList.add('hidden');
+            });
+
+            // Show the selected content
+            const selected = document.getElementById(id);
+            selected.classList.remove('hidden');
+            selected.classList.add('visible');
+        }
+    </script>
+
+
+
+
+  <script>
+
+      function enableEditing() {
+        const fields = [
+          'first-name',
+          'last-name',
+          'birthday',
+          'emergency-contact',
+          'username',
+          'gender',
+          'email',
+          'phone',
+          'contact-method',
+        ];
+      
+        // Replace text with editable input fields
+        fields.forEach(field => {
+          const element = document.getElementById(field);
+          const value = element.innerText;
+          element.innerHTML = `<input type="text" id="${field}-input" value="${value}">`;
+        });
+      
+        // Toggle buttons
+        document.getElementById('edit-btn').classList.add('hidden');
+        document.getElementById('save-btn').classList.remove('hidden');
+      }
+      
+      function saveDetails() {
+        const fields = [
+          'first-name',
+          'last-name',
+          'birthday',
+          'emergency-contact',
+          'username',
+          'gender',
+          'email',
+          'phone',
+          'contact-method',
+        ];
+      
+        const updatedData = {};
+      
+        // Collect the updated data from input fields
+        fields.forEach(field => {
+          const inputElement = document.getElementById(`${field}-input`);
+          const value = inputElement.value;
+          updatedData[field] = value;
+      
+          const element = document.getElementById(field);
+          element.innerText = value;
+        });
+      
+        console.log('Updated Details:', updatedData); // For debugging or sending to the backend
+    
+        // Toggle buttons
+        document.getElementById('edit-btn').classList.remove('hidden');
+        document.getElementById('save-btn').classList.add('hidden');
+    
+        // Make the fetch request
+        fetch('update_user_data.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedData) // Send the updated data as JSON
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            console.log("Update successful:", data.message);
+          } else {
+            console.error("Update failed:", data.message);
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    </script>
+    
+
+
+</body>

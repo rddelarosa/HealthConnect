@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Book an Appointment</title>
+        <link rel="stylesheet" type="text/css" href="style_HC.css">
+
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+      </head>
+      <style>
+        @font-face {
+            font-family: "Etna";
+            src: url("Gmeet-PHP/public/GOTHIC.TTF") format("opentype");
+        }
+    
+        /* General Body and Layout */
+        body {
+            font-family: 'Century Gothic', sans-serif;
+            background-color: #03436a15;
+            margin: 0;
+            padding: 0;
+        }
+    
+        /* Form container */
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
+        }
+    
+        /* Heading */
+        .reg-heading {
+            text-align: center;
+            color: #03426a;
+            font-family: 'Century Gothic', sans-serif;
+            font-size: 40px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            font-weight: normal;
+        }
+    
+        /* Form group styling */
+        .form-group {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+    
+        /* Label styling */
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: medium;
+            font-size: 18px;
+        }
+    
+        /* Input and Select styling */
+        select {
+            width: 100%;  /* Ensures the inputs take the full container width */
+            max-width: 600px; /* Prevents the inputs from growing too wide */
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[type="text"] 
+            {
+                width: 96.5%;  /* Ensures the inputs take the full container width */
+                max-width: 600px; /* Prevents the inputs from growing too wide */
+                padding: 10px;
+                margin-top: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 16px;
+                font-family: 'Century Gothic', sans-serif;
+
+            }
+        
+
+        /* Invalid field styles */
+        input[required]:invalid, 
+        select[required]:invalid {
+            border: 1px solid #03426a; /* Red border for invalid fields */
+        }
+    
+        /* Valid field styles */
+        input[required]:valid, 
+        select[required]:valid {
+            border: 1px solid #ccc; /* Default border for valid fields */
+        }
+    
+        /* Focus effect */
+        input[type="text"]:focus, 
+        select:focus {
+            border-color: #2b7cd1; /* Blue border for focused fields */
+            outline: none;
+        }
+    
+        /* Submit Button */
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #2b7cd1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            font-family: 'Century Gothic', sans-serif;
+        }
+    
+        /* Hover effect on button */
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    
+        /* Additional Input Styling for consistency */
+        select {
+            font-family: 'Century Gothic', sans-serif;
+            font-size: 16px;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 15px;
+                width: 100%;
+            }
+    
+            .reg-heading {
+                font-size: 1.8rem;
+            }
+    
+            select, input[type="text"], button[type="submit"] {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+
+
+    <script>
+        async function submitAppointment(e) {
+            e.preventDefault(); // Prevent default form submission
+        
+            const username = "currentLoggedInUser"; // Replace with dynamic username retrieval
+            const diagnosticLab = document.getElementById("diagnostic_lab").value;
+            const hospitalId = document.getElementById("hospital_id").value;
+            const doctorId = document.getElementById("doctor_name").value;
+            const schedule = document.getElementById("appointment_schedule").value;
+            const chiefComplaint = document.getElementById("chief_complaint").value;
+        
+            if (!username || !diagnosticLab || !hospitalId || !doctorId || !schedule || !chiefComplaint) {
+                alert("Please fill out all required fields.");
+                return;
+            }
+        
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('diagnostic_lab', diagnosticLab);
+            formData.append('hospital_id', hospitalId);
+            formData.append('doctor_id', doctorId);
+            formData.append('appointment_schedule', schedule);
+            formData.append('chief_complaint', chiefComplaint);
+        
+            if (diagnosticLab === "teleconsult") {
+                // Handle teleconsultation and generate Google Meet link
+                try {
+                    const response = await fetch("book_appointment.php", {
+                        method: "POST",
+                        body: formData
+                    });
+        
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+        
+                    const result = await response.json();
+                    console.log("Response from PHP:", result);
+        
+                    if (result.success) {
+                        alert(`Appointment successfully booked! Google Meet link: ${result.gmeet_link}`);
+                    } else {
+                        alert(result.message || "An error occurred while booking the appointment.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Failed to book the appointment. Please try again.");
+                }
+            } else {
+                // Handle face-to-face appointment
+                try {
+                    const response = await fetch("book_appointment.php", {
+                        method: "POST",
+                        body: formData
+                    });
+        
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+        
+                    const result = await response.json();
+                    console.log("Response from PHP:", result);
+        
+                    if (result.success) {
+                        alert("Appointment successfully booked!");
+                    } else {
+                        alert(result.message || "An error occurred while booking the appointment.");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Failed to book the appointment. Please try again.");
+                }
+            }
+        
+            // Redirect to dashboard
+            window.location.href = "http://localhost/HealthConnect/dashboard.html";
+        }
+        async function loadHospitals() {
+            const diagnosticLab = document.getElementById('diagnostic_lab').value;
+            const hospitalSelect = document.getElementById('hospital_id');
+            hospitalSelect.innerHTML = '<option value="">Select Hospital</option>';
+        
+            if (diagnosticLab) {
+                const response = await fetch(`get_hospitals.php?diagnostic_lab=${diagnosticLab}`);
+                const hospitals = await response.json();
+        
+                hospitals.forEach(hospital => {
+                    const option = document.createElement('option');
+                    option.value = hospital.id;
+                    option.textContent = hospital.name;
+                    hospitalSelect.appendChild(option);
+                });
+            }
+        }
+        
+        async function loadDoctors() {
+            const hospitalId = document.getElementById('hospital_id').value;
+            const doctorSelect = document.getElementById('doctor_name');
+            doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+        
+            if (hospitalId) {
+                const response = await fetch(`get_doctors.php?hospital_id=${hospitalId}`);
+                const doctors = await response.json();
+        
+                doctors.forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor.id;
+                    option.textContent = doctor.name;
+                    doctorSelect.appendChild(option);
+                });
+            }
+        }
+        
+        async function loadSchedules() {
+            const doctorId = document.getElementById('doctor_name').value;
+            const scheduleSelect = document.getElementById('appointment_schedule');
+            scheduleSelect.innerHTML = '<option value="">Select Schedule</option>';
+        
+            if (doctorId) {
+                const response = await fetch(`get_schedule.php?doctor_id=${doctorId}`);
+                const schedules = await response.json();
+        
+                schedules.forEach(schedule => {
+                    const option = document.createElement('option');
+                    option.value = `${schedule.date} ${schedule.time}`;
+                    option.textContent = `${schedule.date} at ${schedule.time}`;
+                    scheduleSelect.appendChild(option);
+                });
+            }
+        }
+        
+
+        
+    </script>
+
+<body>
+        <div class="form-container">
+            <h2 class="reg-heading">Book an Appointment</h2>
+    
+    <form id="appointment_form" action="save_appointment.php"   onsubmit="submitAppointment(event)">
+        <div class="form-group">
+            <label for="diagnostic_lab">Diagnostic Lab:</label>
+        <select id="diagnostic_lab" name="diagnostic_lab" onchange="loadHospitals()" required>
+            <option value="">Select Diagnostic Lab</option>
+            <option value="teleconsult">Teleconsult</option>
+            <option value="face_to_face">Face to Face Consultation</option>
+        </select>
+        </div>
+        <div class="form-group">
+            <label for="hospital_id">Hospital:</label>
+        <select id="hospital_id" name="hospital_id" onchange="loadDoctors()" required>
+            <option value="">Select Hospital</option>
+        </select>
+        </div>
+        <div class="form-group">
+            <label for="doctor_name">Doctor:</label>
+        <select id="doctor_name" name="doctor_id" onchange="loadSchedules()" required>
+            <option value="">Select Doctor</option>
+        </select>
+        </div>
+        <div class="form-group">
+            <label for="appointment_schedule">Available Schedules:</label>
+        <select id="appointment_schedule" name="appointment_schedule" required>
+        <option value="">Select Schedule</option>
+        </select>
+        </div>
+        <div class="form-group">
+        <label for="chief_complaint">Chief Complaint:</label>
+        <input type="text" id="chief_complaint" name="chief_complaint" required>
+        </div>
+        <div class="form-actions">
+        <button type="submit">Submit</button>
+        </div>
+
+    </form>
+    </div>
+
+</body>
+</html>
