@@ -82,6 +82,31 @@
   </div>
 </section>
 
+  <script>
+function submitLogin() {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+
+    // Make an AJAX POST request
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://healthconnect.infinityfreeapp.com/process_login.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    
+    // Send the form data to PHP
+    xhr.send("username=" + username + "&password=" + password);
+
+    // Handle response
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            // Display the response (success or error message)
+            document.getElementById("response").innerHTML = xhr.responseText;
+        } else {
+            document.getElementById("response").innerHTML = "Error occurred during login.";
+        }
+    };
+}
+</script>
+
 
 
 <a href="#"><button class="topbtn" title="Back to Top"><i class="fa-solid fas fa-angle-up"></i></button></a>
